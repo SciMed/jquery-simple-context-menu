@@ -15,7 +15,7 @@
  *     ]
  *   });
  *
- * Icon needs to be 16x16. I recommend the Fugue icon set from: http://p.yusukekamiyamane.com/ 
+ * Icon needs to be 16x16. I recommend the Fugue icon set from: http://p.yusukekamiyamane.com/
  *
  * - Joe Walnes, 2011 http://joewalnes.com/
  *   https://github.com/joewalnes/jquery-simple-context-menu
@@ -32,7 +32,7 @@ jQuery.fn.contextPopup = function(menuData) {
 		title: '',
 		items: []
 	};
-	
+
 	// merge them
 	$.extend(settings, menuData);
 
@@ -46,17 +46,19 @@ jQuery.fn.contextPopup = function(menuData) {
     settings.items.forEach(function(item) {
       if (item) {
         var rowCode = '<li><a href="#"><span></span></a></li>';
-        // if(item.icon)
-        //   rowCode += '<img>';
-        // rowCode +=  '<span></span></a></li>';
         var row = $(rowCode).appendTo(menu);
         if(item.icon){
           var icon = $('<img>');
           icon.attr('src', item.icon);
           icon.insertBefore(row.find('span'));
         }
+        if(item.iconClass){
+          var styledIcon = $('<i>');
+          styledIcon.addClass(item.iconClass);
+          styledIcon.insertBefore(row.find('span'));
+        }
         row.find('span').text(item.label);
-          
+
         if (item.isEnabled != undefined && !item.isEnabled()) {
             row.addClass('disabled');
         } else if (item.action) {
@@ -72,10 +74,10 @@ jQuery.fn.contextPopup = function(menuData) {
   }
 
   // On contextmenu event (right click)
-  this.bind('contextmenu', function(e) {	
+  this.bind('contextmenu', function(e) {
     var menu = createMenu(e)
       .show();
-    
+
     var left = e.pageX + 5, /* nudge to the right, so the pointer is covering the title */
         top = e.pageY;
     if (top + menu.height() >= $(window).height()) {
@@ -91,7 +93,7 @@ jQuery.fn.contextPopup = function(menuData) {
 
     // Cover rest of page with invisible div that when clicked will cancel the popup.
     var bg = $('<div></div>')
-      .css({left:0, top:0, width:'100%', height:'100%', position:'absolute', zIndex:1000000})
+      .css({left:0, top:0, width:'100%', height:'100%', position:'fixed', zIndex:1000000})
       .appendTo(document.body)
       .bind('contextmenu click', function() {
         // If click or right click anywhere else on page: remove clean up.
