@@ -22,19 +22,19 @@
  *
  * MIT License: https://github.com/joewalnes/jquery-simple-context-menu/blob/master/LICENSE.txt
  */
-jQuery.fn.contextPopup = function(menuData) {
-	// Define default settings
-	var settings = {
-		contextMenuClass: 'contextMenuPlugin',
-		gutterLineClass: 'gutterLine',
-		headerClass: 'header',
-		seperatorClass: 'divider',
-		title: '',
-		items: []
-	};
+jQuery.fn.contextPopup = function(selector, menuData) {
+  // Define default settings
+  var settings = {
+    contextMenuClass: 'contextMenuPlugin',
+    gutterLineClass: 'gutterLine',
+    headerClass: 'header',
+    seperatorClass: 'divider',
+    title: '',
+    items: []
+  };
 
-	// merge them
-	$.extend(settings, menuData);
+  // merge them
+  $.extend(settings, menuData);
 
   // Build popup menu HTML
   function createMenu(e) {
@@ -74,7 +74,7 @@ jQuery.fn.contextPopup = function(menuData) {
   }
 
   // On contextmenu event (right click)
-  this.bind('contextmenu', function(e) {
+  this.on('contextmenu', selector, function(e) {
     var menu = createMenu(e)
       .show();
 
