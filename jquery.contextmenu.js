@@ -106,6 +106,7 @@ jQuery.fn.contextPopup = function(selector, menuData) {
     menu.find('a').click(function() {
       bg.remove();
       menu.remove();
+      return false;
     });
 
     // Cancel event, so real browser popup doesn't appear.
